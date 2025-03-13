@@ -23,4 +23,3 @@ The mod disables itself for the current session when a game configuration save i
     * Windows: `%localappdata%\Firaxis Games\Sid Meier's Civilization VII\Mods`
     * MacOS: `~/Library/Application Support/Civilization VII/Mods`
     * Steam Deck\Linux: `~/My Games/Sid Meier's Civilization VII/Mods/`
-3. Also requires installation of the [Options API mod](https://forums.civfanatics.com/resources/[TODO - placeholder]/)
