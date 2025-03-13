@@ -1,0 +1,33 @@
+{
+  "$schema": "https://unpkg.com/release-it/schema/release-it.json",
+  "github": {
+    "release": true
+  },
+  "npm": {
+    "release": false,
+    "publish": false
+  },
+  "git": {
+    "requireBranch": "main",
+    "changelog": "npx auto-changelog --stdout --commit-limit false --unreleased --template https://raw.githubusercontent.com/release-it/release-it/main/templates/changelog-compact.hbs"
+  },
+  "hooks": {
+    "after:bump": "npx auto-changelog -p"
+  },
+  "plugins": {
+    "@j-ulrich/release-it-regex-bumper": {
+      "out": [
+        {
+          "file": "StickyGameSettings.modinfo",
+          "search": "tbq_sticky_game_settings\" version=\"{{semver}}\"",
+          "replace": "tbq_sticky_game_settings\" version=\"{{versionWithoutPrerelease}}\""
+        },
+        {
+          "file": "StickyGameSettings.modinfo",
+          "search": "<Version>{{semver}}",
+          "replace": "<Version>{{versionWithoutPrerelease}}"
+        }
+      ]
+    }
+  }
+}

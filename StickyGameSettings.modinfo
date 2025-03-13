@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Mod id="tbq_sticky_game_settings" version="0.0.0"
+    xmlns="ModInfo">
+    <Properties>
+        <Name>Sticky Game Settings</Name>
+        <Description>Remember the settings used previously when starting a new game.</Description>
+        <Authors>TBQ</Authors>
+        <Package>Mod</Package>
+        <Version>0.0.0</Version>
+        <AffectsSavedGames>0</AffectsSavedGames>
+    </Properties>
+    <ActionCriteria>
+        <Criteria id="always">
+            <AlwaysMet></AlwaysMet>
+        </Criteria>
+    </ActionCriteria>
+    <ActionGroups>
+        <ActionGroup id="tbq_sticky_game_settings_shell" scope="shell" criteria="always">
+            <Actions>
+                <UIScripts>
+                    <Item>mod/shell/sticky-game-settings.js</Item>
+                    <Item>mod/shell/screen-save-load-decorator.js</Item>
+                </UIScripts>
+                <ImportFiles>
+                    <Item>api/storage/json-store.js</Item>
+                    <Item>api/game-settings/game-settings-store.js</Item>
+                    <Item>mod/sticky-constants.js</Item>
+                    <Item>mod/shell/game-setup.js</Item>
+                </ImportFiles>
+            </Actions>
+        </ActionGroup>
+        <ActionGroup id="tbq_sticky_game_settings_game" scope="game" criteria="always">
+            <Actions>
+                <UIScripts>
+                    <Item>mod/game/pause-menu-panel-decorator.js</Item>
+                </UIScripts>
+                <ImportFiles>
+                    <Item>mod/sticky-constants.js</Item>
+                </ImportFiles>
+            </Actions>
+        </ActionGroup>
+    </ActionGroups>
+</Mod>
+
