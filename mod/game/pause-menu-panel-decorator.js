@@ -25,7 +25,9 @@ class PauseMenuPanelDecorator {
         ].join(' | ');
         dangerInfo.textContent = [
             this.#localGameSettingName("DisasterIntensity"),
-            `Crises ${this.gameSettings["CrisesEnabled"].value ? 'On' : 'Off'}`
+            `${Locale.compose('LOC_ADVANCED_OPTIONS_CRISIS')} ${this.gameSettings["CrisesEnabled"].value 
+                ? Locale.compose('LOC_ADVANCED_OPTIONS_ON') 
+                : Locale.compose('LOC_ADVANCED_OPTIONS_OFF')}`
         ].join(' | ');
 
         const infoClassName = 'pause-menu__game-info self-center font-body-base pointer-events-auto';
