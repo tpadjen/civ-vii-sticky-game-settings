@@ -1,0 +1,24 @@
+{
+    "name": "tbq_sticky_game_settings",
+    "id": "tbq-sgs",
+    "visibleName": "Sticky Game Settings",
+    "description": "Remember the settings used previously when starting a new game.",
+    "authors": ["TBQ"],
+    "entries": {
+        "sticky-game-settings": "mod/shell/sticky-game-settings.ts",
+        "screen-save-load-decorator": "mod/shell/screen-save-load-decorator.ts",
+        "pause-menu-panel-decorator": "mod/game/pause-menu-panel-decorator.ts"
+    },
+    "replacements": {},
+    "texts": ["localization.sql"],
+    "actionGroups": {
+        "shell": {
+            "scope": "shell",
+            "entries": ["sticky-game-settings", "screen-save-load-decorator"]
+        },
+        "game": {
+            "scope": "game",
+            "entries": ["pause-menu-panel-decorator"]
+        }
+    }
+}
