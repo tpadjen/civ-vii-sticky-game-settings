@@ -20,7 +20,10 @@ class PauseMenuPanelDecorator {
         const dangerInfo = document.createElement('p')
         const mapInfo = document.createElement('p')
 
-        ageInfo.textContent = this.#localGameSettingName('AgeLength')
+        ageInfo.textContent = [
+            this.#localGameSettingName('AgeLength'),
+            `${this.#localGameSettingName('StartPosition')} ${Locale.compose('LOC_DIPLOMACY_QUICK_START_PROJECT')}`,
+        ].join(' | ')
         mapInfo.textContent = [
             this.#localGameSettingName('MapSize'),
             this.#localGameSettingName('Map'),
