@@ -44,6 +44,10 @@ declare var GameSetup: {
     ) => void
 }
 
+declare var GameContext: {
+    localPlayerID: number
+}
+
 declare type ServerType = 'SinglePlayer' | 'Multiplayer'
 
 declare type ExtendedSaveGameInfo = SaveGameInfo & {

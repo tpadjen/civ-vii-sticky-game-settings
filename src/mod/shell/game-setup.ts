@@ -58,6 +58,9 @@ export class GameSetupHandler {
                 value,
             ])
 
+            // only read in saved state the local player's game parameters
+            if (id !== GameContext.localPlayerID) return
+
             // The normal game params are reset to defaults when
             // picking a leader or civ so replace them with saved
             // data when available
