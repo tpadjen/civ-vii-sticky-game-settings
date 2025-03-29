@@ -6,3 +6,15 @@ const gameSettingsStore = new GameSettingsStore(
     new JSONStore('sticky-game-settings')
 )
 export const gameSetupHandler = new GameSetupHandler(gameSettingsStore)
+
+function init() {
+    const inAgeTransition =
+        Modding.getTransitionInProgress() == TransitionType.Age
+    if (inAgeTransition) {
+        return
+    }
+
+    gameSetupHandler.activate()
+}
+
+Loading.runWhenFinished(init)

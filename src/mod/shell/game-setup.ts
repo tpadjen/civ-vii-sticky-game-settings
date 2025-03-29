@@ -15,6 +15,7 @@ export class GameSetupHandler {
         parameterId: GameSettingName,
         value: GameSettingValue
     ) => void
+    private _isActive: boolean
 
     constructor(gameSettingsStore: GameSettingsStore) {
         this.gameSettingsStore = gameSettingsStore
@@ -22,14 +23,26 @@ export class GameSetupHandler {
         this.getGameParameters = this.proto.getGameParameters
         this.setGameParameterValue = this.proto.setGameParameterValue
         this.setPlayerParameterValue = this.proto.setPlayerParameterValue
+    }
+
+    activate() {
+        if (this._isActive) return
 
         this.readSavedParameters()
         this.interceptSetPlayerParameterValue()
         this.listenForGameParameterChanges()
+        this._isActive = true
+    }
+
+    deactivate() {
+        if (!this._isActive) return
+
+        this.unwrapPrototype()
+        this._isActive = false
     }
 
     // load in the previously saved state, or else save the current one
-    readSavedParameters() {
+    private readSavedParameters() {
         const parameters = GameSetup.getGameParameters()
         parameters.forEach((setupParam: GameParameter) => {
             if (STICKY_PARAMETER_IDS.includes(setupParam.ID)) {
@@ -45,7 +58,7 @@ export class GameSetupHandler {
         })
     }
 
-    interceptSetPlayerParameterValue() {
+    private interceptSetPlayerParameterValue() {
         const handler = this
         this.proto.setPlayerParameterValue = function (
             id: number,
@@ -85,7 +98,7 @@ export class GameSetupHandler {
         }
     }
 
-    listenForGameParameterChanges() {
+    private listenForGameParameterChanges() {
         const handler = this
         this.proto.setGameParameterValue = function (
             id: GameSettingName,
@@ -98,11 +111,7 @@ export class GameSetupHandler {
         }
     }
 
-    disable() {
-        this.unwrapPrototype()
-    }
-
-    unwrapPrototype() {
+    private unwrapPrototype() {
         this.proto.getGameParameters = this.getGameParameters
         this.proto.setGameParameterValue = this.setGameParameterValue
         this.proto.setPlayerParameterValue = this.setPlayerParameterValue

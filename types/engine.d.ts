@@ -54,6 +54,14 @@ declare type ExtendedSaveGameInfo = SaveGameInfo & {
     path?: string
 }
 
+declare enum TransitionType {
+    Age
+}
+
+declare var Modding: {
+    getTransitionInProgress: () => TransitionType
+}
+
 type GameEvent =
     | 'AccountUnlinked'
     | 'AccountUpdated'
