@@ -15,6 +15,7 @@ export class GameSetupHandler {
         parameterId: GameSettingName,
         value: GameSettingValue
     ) => void
+    startCampaignListener: () => void
     private _isActive: boolean
 
     constructor(gameSettingsStore: GameSettingsStore) {
@@ -23,6 +24,8 @@ export class GameSetupHandler {
         this.getGameParameters = this.proto.getGameParameters
         this.setGameParameterValue = this.proto.setGameParameterValue
         this.setPlayerParameterValue = this.proto.setPlayerParameterValue
+
+        this.startCampaignListener = this.deactivate.bind(this)
     }
 
     activate() {
@@ -38,6 +41,7 @@ export class GameSetupHandler {
         if (!this._isActive) return
 
         this.unwrapPrototype()
+        window.removeEventListener('startCampaign', this.startCampaignListener)
         this._isActive = false
     }
 
