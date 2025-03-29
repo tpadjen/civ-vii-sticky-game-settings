@@ -24,11 +24,24 @@ declare var Locale: {
     compose: (text: string) => string
 }
 
+declare type GameParameter = {
+    ID: string
+    value: {
+        value: string | number | boolean
+        type: 'string' | 'number' | 'boolean'
+    }
+}
+
+declare type GameSettingValue = string | number | boolean
+
 declare var GameSetup: {
     getGameParameters: () => GameParameter[]
     resolveString: (text: string) => string
     makeString: (text: string) => string
-    setGameParameterValue: (id: string, value: JSONValue) => void
+    setGameParameterValue: (
+        id: string,
+        value: GameSettingValue
+    ) => void
 }
 
 declare type ServerType = 'SinglePlayer' | 'Multiplayer'

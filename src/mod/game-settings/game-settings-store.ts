@@ -1,4 +1,5 @@
-import { DataStore, JSONValue } from './types.js'
+import { DataStore } from '../../data/types.js'
+import { GameSettingName, GameSettings } from '../types.js'
 
 export class GameSettingsStore {
     private dataStore: DataStore
@@ -9,18 +10,18 @@ export class GameSettingsStore {
         this.settingsKey = settingsKey
     }
 
-    readAndSet(parameterID: string, value: JSONValue) {
+    readAndSet(parameterID: GameSettingName, value: GameSettingValue) {
         const newValue = this.load(parameterID) ?? value
         this.save(parameterID, newValue)
         return newValue
     }
 
-    load(parameterID: string) {
+    load(parameterID: GameSettingName) {
         const settings = this.#readGameSettings()
-        return settings?.[parameterID]
+        return settings?.[parameterID] as GameSettingValue
     }
 
-    save(parameterID: string, value: JSONValue) {
+    save(parameterID: GameSettingName, value: GameSettingValue) {
         const oldSettings = this.#readGameSettings()
         const newSettings = {
             ...oldSettings,
@@ -38,11 +39,11 @@ export class GameSettingsStore {
         this.dataStore.setItem(this.settingsKey, undefined)
     }
 
-    #readGameSettings() {
-        return this.dataStore.getItem(this.settingsKey) ?? {}
+    #readGameSettings(): GameSettings {
+        return (this.dataStore.getItem(this.settingsKey) as GameSettings) ?? {}
     }
 
-    #writeGameSettings(settings: Record<string, JSONValue>) {
+    #writeGameSettings(settings: GameSettings) {
         this.dataStore.setItem(this.settingsKey, settings)
     }
 }

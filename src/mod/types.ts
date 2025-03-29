@@ -1,5 +1,4 @@
-import { JSONValue } from 'api/types'
-import { STICKY_PARAMETER_IDS } from './constants'
+import { STICKY_PARAMETER_ID_NAMES } from './constants'
 import { SaveGameInfo } from '/core/ui/save-load/model-save-load'
 
 export type ScreenSaveLoadType = typeof Component & {
@@ -7,11 +6,13 @@ export type ScreenSaveLoadType = typeof Component & {
     loadSave: (saveGameInfo: SaveGameInfo, serverType: ServerType) => void
 }
 
-export type GameSetting = {
-    name: string
-    value: JSONValue
-}
+export type GameSettingName = (typeof STICKY_PARAMETER_ID_NAMES)[number]
 
 export type GameSettings = {
-    [key in (typeof STICKY_PARAMETER_IDS)[number]]: GameSetting
+    [key in GameSettingName]?: GameSettingValue
+}
+
+export type GameParameterInfo = {
+    name: string
+    value: GameSettingValue
 }

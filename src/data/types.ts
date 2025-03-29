@@ -1,6 +1,6 @@
 export interface DataStore {
-    getItem: (key: string) => any
-    setItem: (key: string, value: any) => void
+    getItem: (key: string) => JSONValue | undefined
+    setItem: (key: string, value: JSONValue) => void
 }
 
 export type JSONValue =

@@ -1,13 +1,13 @@
 import { STICKY_PARAMETER_IDS } from '../constants.js'
-import { GameSettings } from '../types.js'
+import { GameParameterInfo, GameSettingName } from '../types.js'
 
 class PauseMenuPanelDecorator {
     Root: ComponentRoot
-    private gameSettings: GameSettings
+    private gameParameters: Record<GameSettingName, GameParameterInfo>
 
     constructor(panel: Component) {
         this.Root = panel.Root
-        this.gameSettings = this.#loadGameSettings()
+        this.gameParameters = this.#loadGameParameters()
     }
 
     beforeAttach() {}
@@ -31,7 +31,7 @@ class PauseMenuPanelDecorator {
         dangerInfo.textContent = [
             this.#localGameSettingName('DisasterIntensity'),
             `${Locale.compose('LOC_ADVANCED_OPTIONS_CRISIS')} ${
-                this.gameSettings['CrisesEnabled'].value
+                this.gameParameters['CrisesEnabled'].value
                     ? Locale.compose('LOC_ADVANCED_OPTIONS_ON')
                     : Locale.compose('LOC_ADVANCED_OPTIONS_OFF')
             }`,
@@ -52,23 +52,27 @@ class PauseMenuPanelDecorator {
 
     afterDetach() {}
 
-    #localGameSettingName(name: string) {
+    #localGameSettingName(name: GameSettingName) {
         return Locale.compose(
-            GameSetup.resolveString(this.gameSettings[name]?.name)
+            GameSetup.resolveString(this.gameParameters[name]?.name)
         )
     }
 
-    #loadGameSettings() {
-        const parameters = GameSetup.getGameParameters()
-        let settings: GameSettings = {}
-        for (const [index, setupParam] of parameters.entries()) {
-            if (STICKY_PARAMETER_IDS.includes(setupParam.ID)) {
-                const parameterID = GameSetup.resolveString(setupParam.ID)
-                settings[parameterID] = setupParam.value
-            }
-        }
-
-        return settings
+    #loadGameParameters(): Record<GameSettingName, GameParameterInfo> {
+        return GameSetup.getGameParameters()
+            .filter((setupParam) =>
+                STICKY_PARAMETER_IDS.includes(setupParam.ID)
+            )
+            .reduce(
+                (acc, setupParam) => {
+                    const parameterID = GameSetup.resolveString(setupParam.ID)
+                    return {
+                        ...acc,
+                        [parameterID]: setupParam.value,
+                    }
+                },
+                {} as Record<GameSettingName, GameParameterInfo>
+            )
     }
 
     onAttributeChanged(attribute: string, value: string) {}
